@@ -1,0 +1,256 @@
+---
+name: ipsec
+reconfigureEndpoint: "/api/ipsec/service/reconfigure"
+
+resources:
+  - name: Connection
+    filename: connection
+    monad: Connection
+    endpoints:
+      add: "/api/ipsec/connections/add"
+      get: "/api/ipsec/connections/get"
+      update: "/api/ipsec/connections/set"
+      delete: "/api/ipsec/connections/del"
+    readOnly: false
+    getByFilter: true
+    getAll: true
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+      - name: Name
+        type: string
+        key: name
+      - name: Enabled
+        type: bool
+        key: enabled
+      - name: Local
+        type: LocalConfig
+        key: local
+      - name: Remote
+        type: RemoteConfig
+        key: remote
+      - name: Children
+        type: array
+        key: children
+    customTypes:
+      LocalConfig:
+        - name: Address
+          type: string
+          key: address
+        - name: Port
+          type: string
+          key: port
+        - name: Authentication
+          type: SelectedMap
+          key: authentication
+        - name: Certificate
+          type: SelectedMap
+          key: certificate
+      RemoteConfig:
+        - name: Address
+          type: string
+          key: address
+        - name: Port
+          type: string
+          key: port
+        - name: Authentication
+          type: SelectedMap
+          key: authentication
+        - name: Certificate
+          type: SelectedMap
+          key: certificate
+
+  - name: KeyPair
+    filename: key_pair
+    monad: KeyPair
+    endpoints:
+      add: "/api/ipsec/key_pairs/add"
+      get: "/api/ipsec/key_pairs/get"
+      update: "/api/ipsec/key_pairs/setItem"
+      delete: "/api/ipsec/key_pairs/del"
+    readOnly: false
+    getByFilter: true
+    getAll: true
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+      - name: Name
+        type: string
+        key: name
+      - name: Type
+        type: SelectedMap
+        key: type
+      - name: Size
+        type: int
+        key: size
+      - name: PublicKey
+        type: string
+        key: public_key
+      - name: PrivateKey
+        type: string
+        key: private_key
+
+  - name: PreSharedKey
+    filename: pre_shared_key
+    monad: PreSharedKey
+    endpoints:
+      add: "/api/ipsec/pre_shared_keys/add"
+      get: "/api/ipsec/pre_shared_keys/get"
+      update: "/api/ipsec/pre_shared_keys/setItem"
+      delete: "/api/ipsec/pre_shared_keys/del"
+    readOnly: false
+    getByFilter: true
+    getAll: true
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+      - name: Name
+        type: string
+        key: name
+      - name: Key
+        type: string
+        key: key
+      - name: Remote
+        type: string
+        key: remote
+
+  - name: Pool
+    filename: pool
+    monad: Pool
+    endpoints:
+      add: "/api/ipsec/pools/add"
+      get: "/api/ipsec/pools/get"
+      update: "/api/ipsec/pools/set"
+      delete: "/api/ipsec/pools/del"
+    readOnly: false
+    getByFilter: true
+    getAll: true
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+      - name: Name
+        type: string
+        key: name
+      - name: Network
+        type: string
+        key: network
+      - name: Mask
+        type: string
+        key: mask
+      - name: Description
+        type: string
+        key: description
+      - name: Enabled
+        type: bool
+        key: enabled
+
+  - name: VTI
+    filename: vti
+    monad: VTI
+    endpoints:
+      add: "/api/ipsec/vti/add"
+      get: "/api/ipsec/vti/get"
+      update: "/api/ipsec/vti/set"
+      delete: "/api/ipsec/vti/del"
+    readOnly: false
+    getByFilter: true
+    getAll: true
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+      - name: Name
+        type: string
+        key: name
+      - name: Interface
+        type: SelectedMap
+        key: interface
+      - name: Local
+        type: string
+        key: local
+      - name: Remote
+        type: string
+        key: remote
+      - name: Enabled
+        type: bool
+        key: enabled
+
+  - name: ManualSPD
+    filename: manual_spd
+    monad: ManualSPD
+    endpoints:
+      add: "/api/ipsec/manual_spd/add"
+      get: "/api/ipsec/manual_spd/get"
+      update: "/api/ipsec/manual_spd/set"
+      delete: "/api/ipsec/manual_spd/del"
+    readOnly: false
+    getByFilter: true
+    getAll: true
+    attrs:
+      - name: UUID
+        type: string
+        key: uuid
+      - name: Name
+        type: string
+        key: name
+      - name: Source
+        type: string
+        key: source
+      - name: Destination
+        type: string
+        key: destination
+      - name: Direction
+        type: SelectedMap
+        key: direction
+      - name: Enabled
+        type: bool
+        key: enabled
+
+  - name: Settings
+    filename: settings
+    monad: Settings
+    endpoints:
+      get: "/api/ipsec/settings/get"
+      update: "/api/ipsec/settings/set"
+    readOnly: false
+    getByFilter: false
+    getAll: true
+    attrs:
+      - name: Enabled
+        type: bool
+        key: enabled
+      - name: NATTraversal
+        type: bool
+        key: nat_traversal
+      - name: NATTraversalPort
+        type: int
+        key: nat_traversal_port
+      - name: EnableCompression
+        type: bool
+        key: enable_compression
+      - name: EnableRedirect
+        type: bool
+        key: enable_redirect
+      - name: EnableRedirectRoute
+        type: bool
+        key: enable_redirect_route
+
+  - name: Service
+    filename: service
+    monad: Service
+    endpoints:
+      get: "/api/ipsec/service/status"
+    readOnly: true
+    getByFilter: false
+    getAll: true
+    attrs:
+      - name: Status
+        type: string
+        key: status
+      - name: Running
+        type: bool
+        key: running 

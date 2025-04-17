@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"fmt"
 	"go/format"
-	"golang.org/x/text/cases"
-	"golang.org/x/text/language"
 	"os"
 	"text/template"
+
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 type Generator struct {
